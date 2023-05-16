@@ -9,7 +9,7 @@ const options = {
     dbName: 'colorPrediction'
 }
 
-const uri = process.env.URI
+const uri = process.env.URI || "mongodb+srv://arsenal:H0oa0Cidu0vt8iMc@arsenal.a1hmwwd.mongodb.net/?retryWrites=true&w=majority"
 
 mongoose.connect(uri, options).then(res => {
     console.log('Database is connected....'.bgRed)

@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
 
 app.use('/', require('./routes/resultsRoutes'))
 
-const port = process.env.PORT
+const port = process.env.PORT || 6000
 app.listen(port, () => {
     console.log(`server is running on http://localhost:${port} .... `.bgYellow)
 })
