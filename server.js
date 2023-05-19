@@ -23,6 +23,7 @@ app.get("/", (req, res) => {
 });
 
 app.use('/', require('./routes/resultsRoutes'))
+app.use('/', require('./routes/practiceRoutes'))
 
 const port = process.env.PORT || 6000
 app.listen(port, () => {
