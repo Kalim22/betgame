@@ -1,5 +1,7 @@
 const result = require('../modals/resultModal')
 
+const placebet = require('../modals/placeBetModal')
+
 const addResult = async (req, res) => {
     const { serialNo, dateTime, color } = req.body
 
@@ -23,7 +25,7 @@ const addResult = async (req, res) => {
                 color
             })
             await newResult.save()
-            return res.status(201).json({ status: true, message: 'A new result added...' })
+            return res.status(201).json({ status: true, message: 'A new result added...', data: newResult })
         }
 
         if(existingDoc === null){
@@ -52,11 +54,19 @@ const getResult = async (req, res) => {
     }
 }
 
-const lastDocument = async (req, res) => {
+const savePlaceBet = async (req, res) => {
+
+    const { userName, selectedColor} = req.body;
+
     try {
-        const doc = await result.findOne().sort({ serialNo: -1 }).exec()
-        console.log('last document -> ', doc)
-        return doc
+        const bet = await placebet({
+            userName: 'kalim',
+            selectedColor,
+        })
+
+        await bet.save()
+
+        return res.status(201).json({status: true, data: bet})
     } catch (error) {
         console.log(error)
     }
@@ -64,5 +74,6 @@ const lastDocument = async (req, res) => {
 
 module.exports = {
     addResult,
-    getResult
+    getResult,
+    savePlaceBet
 }

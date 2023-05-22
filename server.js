@@ -27,6 +27,6 @@ app.use('/', require('./routes/practiceRoutes'))
 
 const port = process.env.PORT || 6000
 app.listen(port, () => {
-    console.log(`server is running on http://localhost:${port} .... `.bgYellow)
+    console.log(`server is running on http://localhost:${port} .... `.bgBlue)
 })
 
