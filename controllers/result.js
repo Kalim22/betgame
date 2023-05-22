@@ -2,8 +2,8 @@ const result = require('../modals/resultModal')
 
 const placebet = require('../modals/placeBetModal')
 
-const addResult = async (req, res) => {
-    const { serialNo, dateTime, color } = req.body
+const generateColor = async (req, res) => {
+    const { color } = req.body
 
     // if(!(serialNo && dateTime && color)){
     //     return res.status(404).json({message: 'please fill all the fields!'})
@@ -13,12 +13,12 @@ const addResult = async (req, res) => {
         const existingDoc = await result.findOne().sort({ serialNo: -1 }).exec()
 
         let date = new Date()
-      date = date.toISOString().replaceAll('-', '').split('T')[0]
-    //   console.log(date)
+        date = date.toISOString().replaceAll('-', '').split('T')[0]
+        //   console.log(date)
 
         // console.log(existingDoc  === null)
 
-        if(existingDoc){
+        if (existingDoc) {
             const newResult = await result({
                 serialNo: existingDoc.serialNo += 1,
                 dateTime: date,
@@ -28,7 +28,7 @@ const addResult = async (req, res) => {
             return res.status(201).json({ status: true, message: 'A new result added...', data: newResult })
         }
 
-        if(existingDoc === null){
+        if (existingDoc === null) {
             const newResult = await result({
                 serialNo: 1,
                 dateTime: date,
@@ -56,7 +56,7 @@ const getResult = async (req, res) => {
 
 const savePlaceBet = async (req, res) => {
 
-    const { userName, selectedColor} = req.body;
+    const { userName, selectedColor } = req.body;
 
     try {
         const bet = await placebet({
@@ -66,14 +66,14 @@ const savePlaceBet = async (req, res) => {
 
         await bet.save()
 
-        return res.status(201).json({status: true, data: bet})
+        return res.status(201).json({ status: true, data: bet })
     } catch (error) {
         console.log(error)
     }
 }
 
 module.exports = {
-    addResult,
+    generateColor,
     getResult,
     savePlaceBet
 }
